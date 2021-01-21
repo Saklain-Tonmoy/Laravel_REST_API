@@ -50,6 +50,8 @@ class StudentController extends Controller
         $data['address'] = $request->address;
         $data['gender'] = $request->gender;
         $data['photo'] = $request->photo;
+        $insert = DB::table('students')->insert($data);
+        return response()->json($insert);
     }
 
     /**
@@ -58,9 +60,11 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show($id)
     {
-        //
+        //$view = DB::table('students')->where('id', $id)->first();
+        $view = Student::findorfail($id);
+        return response()->json($view);
     }
 
     /**
