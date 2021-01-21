@@ -85,7 +85,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
         $data = array();
         $data['class_id'] = $request->class_id;
@@ -107,13 +107,15 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        $img = DB::table('students')->where('id', $id)->first();
-        $image_path = $img->photo;
+        $img = DB::table('students')->where('id', $id)->first(); // get the data
+        $image_path = $img->photo; // get image path
 
-        $done = unlink($image_path);
-        $delete = DB::table('students')->where('id', $id)->delete();
+        $done = unlink($image_path); // image deleted from folder
+        $delete = DB::table('students')->where('id', $id)->delete(); // delete data from database using query builder
+
+        //DB::table('students')->where('id', $id)->delete(); // delete data from database using eloquent
         
         return response()->json($delete);
     }
