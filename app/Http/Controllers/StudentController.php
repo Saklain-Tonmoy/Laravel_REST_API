@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use DB;
 
 class StudentController extends Controller
@@ -39,7 +40,16 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = array();
+        $data['class_id'] = $request->class_id;
+        $data['section_id'] = $request->section_id;
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['phone'] = $request->phone;
+        $data['password'] = Hash::make($request->password);
+        $data['address'] = $request->address;
+        $data['gender'] = $request->gender;
+        $data['photo'] = $request->photo;
     }
 
     /**
